@@ -13,7 +13,7 @@ namespace CronometroWpf {
         private TextBlock txtTiempo;
         private TextBlock txtUltimoTiempo;
         private TextBlock txtPausas;
-        private CronometroData cronometroData = new CronometroData();
+        //private CronometroData cronometroData = new CronometroData();
         private Crono miCrono;
 
         public PublicMain()
@@ -109,8 +109,8 @@ namespace CronometroWpf {
 
             this.Content = panelPrincipal;
 
-            cronometroData.Iniciar(miCrono);
-
+            //cronometroData.Iniciar(miCrono);
+            miCrono.Iniciar(miCrono);
 
 
             miCrono.objCrono.CurrentTimeInvalidated += new EventHandler(miCrono_CurrentTimeInvalidated);
@@ -124,8 +124,8 @@ namespace CronometroWpf {
         // Iniciar crono...
         private void btnStart_Clicked(object sender, RoutedEventArgs args)
         {
-
-            cronometroData.Start(miCrono);
+            miCrono.Start(miCrono);
+          //  cronometroData.Start(miCrono);
     
         }
 
@@ -134,7 +134,8 @@ namespace CronometroWpf {
         // Parar el crono...
         private void btnPausa_Clicked(object sender, RoutedEventArgs args)
         {
-            cronometroData.Pause(miCrono);
+            //cronometroData.Pause(miCrono);
+            miCrono.Pause(miCrono);
             ActualizarTxt();
 
         }
@@ -144,8 +145,8 @@ namespace CronometroWpf {
         private void btnStop_Clicked(object sender, RoutedEventArgs args)
         {
             txtUltimoTiempo.Text = txtTiempo.Text;
-            
-            cronometroData.Stop(miCrono);
+            miCrono.Stop(miCrono);
+          //  cronometroData.Stop(miCrono);
             ActualizarTxt();
 
         }
