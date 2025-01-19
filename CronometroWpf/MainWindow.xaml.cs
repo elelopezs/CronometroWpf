@@ -3,7 +3,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using CronometroWpf.Modelo;
-using CronometroWpf.Data;
+using CronometroWpf.Interface;
+using System.Windows.Media.Animation;
+using System.Xml.Serialization;
+
+
 
 
 namespace CronometroWpf {
@@ -13,8 +17,11 @@ namespace CronometroWpf {
         private TextBlock txtTiempo;
         private TextBlock txtUltimoTiempo;
         private TextBlock txtPausas;
-        //private CronometroData cronometroData = new CronometroData();
+       // private Modelo.Cronometro objCro; //= new SingleAnimation(100, 500, new Duration(TimeSpan.FromSeconds(60))).CreateClock();
+       // private Cronometro objCrono;
         private Crono miCrono;
+
+
 
         public PublicMain()
         {
@@ -109,8 +116,11 @@ namespace CronometroWpf {
 
             this.Content = panelPrincipal;
 
-            //cronometroData.Iniciar(miCrono);
-            miCrono.Iniciar(miCrono);
+
+            IIniciarCronometro accion = new AcciomesCronometro();
+            accion.Iniciar(miCrono);
+            //miCrono.Iniciar(miCrono);
+            //miCrono = new Crono(cro, string.Empty, 0);
 
 
             miCrono.objCrono.CurrentTimeInvalidated += new EventHandler(miCrono_CurrentTimeInvalidated);
@@ -124,8 +134,10 @@ namespace CronometroWpf {
         // Iniciar crono...
         private void btnStart_Clicked(object sender, RoutedEventArgs args)
         {
-            miCrono.Start(miCrono);
-          //  cronometroData.Start(miCrono);
+            //miCrono.Start(miCrono);
+            //cronometroData.Start(miCrono);
+            IEncenderCronometro accion = new AcciomesCronometro();
+            accion.Encender(miCrono);
     
         }
 
@@ -134,8 +146,11 @@ namespace CronometroWpf {
         // Parar el crono...
         private void btnPausa_Clicked(object sender, RoutedEventArgs args)
         {
-            //cronometroData.Pause(miCrono);
-            miCrono.Pause(miCrono);
+            // cronometroData.Pause(miCrono);
+            //miCrono.Pause(miCrono);
+
+            IPausarCronometro accion = new AcciomesCronometro();
+            accion.Pausar(miCrono);
             ActualizarTxt();
 
         }
@@ -145,8 +160,11 @@ namespace CronometroWpf {
         private void btnStop_Clicked(object sender, RoutedEventArgs args)
         {
             txtUltimoTiempo.Text = txtTiempo.Text;
-            miCrono.Stop(miCrono);
-          //  cronometroData.Stop(miCrono);
+            //miCrono.Stop(miCrono);
+            //cronometroData.Stop(miCrono);
+            IDetenerCronometro accion = new AcciomesCronometro();
+            accion.Detener(miCrono);
+
             ActualizarTxt();
 
         }
@@ -168,7 +186,14 @@ namespace CronometroWpf {
         }
 
 
-  
+        //private void CrearBtn(string nombre, Panel panel)
+        //{
+        //    Button &(nombre) = new Button();
+        //    &nombre.Content = "Start";
+        //    &nombre.Width = btnWidth;
+        //    &nombre.Click += new RoutedEventHandler(btnStart_Clicked);
+        //    panel.Children.Add(&nombre);
+        //}
 
     }
 
