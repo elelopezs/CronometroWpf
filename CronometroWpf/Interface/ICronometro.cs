@@ -8,44 +8,49 @@ using System.Windows;
 using CronometroWpf.Modelo;
 
 namespace CronometroWpf.Interface
-{
-    //interface ICrono
-    //{
-    //    void Iniciar();
-    //}
+{   // No supe como registrar la DI en proyecto WPF net 5. ///////////////////////
+    public interface IIniciarDI
+    {
+        void IniciarDI(Crono crono);
+    }
 
 
-    //public class Crono : ICrono
-    //{
-    //    public void Iniciar();
-    //}
+    public class Cronome : IIniciarDI
+    {
+        public void IniciarDI(Crono crono)
+        {
+            SingleAnimation animacion =
+                     new SingleAnimation(100, 500, new Duration(TimeSpan.FromSeconds(60)));
+            crono.objCrono = animacion.CreateClock();
+            crono.objCrono.Controller.Stop();
 
-    //class Cronometro
-    //{
-    //    private ICrono _crono;
-    //    public Cronometro(ICrono crono)
-    //    {
+        }
+    }
 
-    //        _crono = crono;
-    //    }
+    public class AccionesCronometroDI
+    {
+        private IIniciarDI _iniciarDI;
+        public AccionesCronometroDI(IIniciarDI iniciarDI)
+        {
 
-    //    public void Inicio()
-    //    {
-    //        _crono.Iniciar();
+            _iniciarDI = iniciarDI;
+        }
 
-
-    //    }
-
-
+        public void Encender(Crono crono)
+        {
+            _iniciarDI.IniciarDI(crono);
 
 
+        }
 
 
-    //    public static void Iniciar()
-    //    {
+    }
 
-    //    }
-    //}
+
+    /// <summary>
+    /// Interface sin DI
+    /// </summary>
+
 
     public interface IIniciarCronometro
     {
@@ -90,6 +95,7 @@ namespace CronometroWpf.Interface
                 crono.objCrono.Controller.Begin();
             }
             crono.objCrono.Controller.Resume();
+    
 
         }
 
